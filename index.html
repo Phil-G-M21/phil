@@ -26,70 +26,6 @@
     --glow-pink: 0 0 20px rgba(255,57,122,0.3);
   }
 
-  /* Light mode overrides */
-  html.light {
-    --bg: #f0f5fa;
-    --bg2: #e4ecf4;
-    --surface: #ffffff;
-    --surface2: #d6e4f0;
-    --cyan: #0077cc;
-    --green: #0a8a40;
-    --amber: #c47d00;
-    --red: #cc2222;
-    --text: #1e3448;
-    --muted: #5a7a93;
-    --border: rgba(0,100,200,0.18);
-    --glow: 0 0 20px rgba(0,119,204,0.2);
-    --glow-green: 0 0 20px rgba(10,138,64,0.2);
-    --pink: #cc1f60;
-    --glow-pink: 0 0 20px rgba(204,31,96,0.2);
-  }
-  html.light body {
-    background: var(--bg);
-    color: var(--text);
-  }
-  html.light nav {
-    background: rgba(240,245,250,0.88);
-  }
-  html.light .mobile-nav {
-    background: rgba(240,245,250,0.98);
-  }
-  html.light body::after {
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px);
-  }
-  html.light .hero-name { color: #0d1e2e; }
-  html.light .section-title { color: #0d1e2e; }
-  html.light .project-title { color: #0d1e2e; }
-  html.light .cert-name { color: #0d1e2e; }
-  html.light .contact-info h3 { color: #0d1e2e; }
-  html.light .pfp-ring {
-    background: linear-gradient(var(--bg), var(--bg)) padding-box,
-                linear-gradient(135deg, var(--cyan), var(--green), var(--cyan)) border-box;
-  }
-
-  /* Theme toggle button */
-  .theme-toggle {
-    display: flex; align-items: center; justify-content: center;
-    width: 36px; height: 36px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: var(--cyan);
-    flex-shrink: 0;
-  }
-  .theme-toggle:hover {
-    border-color: var(--cyan);
-    box-shadow: var(--glow);
-    transform: translateY(-1px);
-  }
-  .theme-toggle svg { transition: transform 0.4s ease; }
-  .theme-toggle:hover svg { transform: rotate(20deg); }
-  .icon-sun, .icon-moon { display: none; }
-  html:not(.light) .icon-moon { display: block; }
-  html.light .icon-sun { display: block; }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   html { scroll-behavior: smooth; }
@@ -862,19 +798,6 @@
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
-  <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-    <!-- Moon icon (shown in dark mode) -->
-    <svg class="icon-moon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-        d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/>
-    </svg>
-    <!-- Sun icon (shown in light mode) -->
-    <svg class="icon-sun" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="5" stroke-width="2"/>
-      <path stroke-linecap="round" stroke-width="2"
-        d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-    </svg>
-  </button>
 </nav>
 
 <!-- Mobile Nav -->
@@ -1193,13 +1116,13 @@
           I'm a high school student hungry to learn and grow. If you're a professional in robotics, mechatronics, or embedded systems — I'd love to connect. Whether it's mentorship, collaboration on a project, or just sharing knowledge, reach out!
         </p>
         <div class="contact-items">
-          <a href="/cdn-cgi/l/email-protection#205048494c494d4f4e41465249594945181660474d41494c0e434f4d" class="contact-item">
+          <a href="mailto:philimonafriyie86@gmail.com" class="contact-item">
             <div class="contact-item-icon">
               <svg width="16" height="16" fill="none" stroke="var(--cyan)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
             </div>
             <div class="contact-item-text">
               <div class="contact-item-label">Email</div>
-              <div class="contact-item-value"><span class="__cf_email__" data-cfemail="77071f1e1b1e1a18191611051e0e1e124f4137101a161e1b5914181a">philimonafriyie86@gmail.com</span></div>
+              <div class="contact-item-value">philimonafriyie86@gmail.com</div>
             </div>
           </a>
           <a href="https://wa.me/233554197193" target="_blank" class="contact-item">
@@ -1258,7 +1181,7 @@
   <div class="footer-copy">© 2026 · ROBOTICS & EMBEDDED SYSTEMS · 🇬🇭 GHANA</div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   // Cursor
   const cursor = document.getElementById('cursor');
   const cursorRing = document.getElementById('cursorRing');
@@ -1322,27 +1245,13 @@
         entry.target.querySelectorAll('.skill-chip-level-fill').forEach(bar => {
           const w = bar.style.width;
           bar.style.width = '0';
-          setTimeout(() => { bar.style.width = w; }, 50);
+          setTimeout(() => { bar.style.width = w; }, 200);
         });
         skillObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.skill-chip').forEach(el => skillObserver.observe(el));
-
-  // Dark / Light mode toggle
-  const themeToggle = document.getElementById('themeToggle');
-  const html = document.documentElement;
-
-  // Load saved preference
-  if (localStorage.getItem('theme') === 'light') {
-    html.classList.add('light');
-  }
-
-  themeToggle.addEventListener('click', () => {
-    html.classList.toggle('light');
-    localStorage.setItem('theme', html.classList.contains('light') ? 'light' : 'dark');
-  });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.skills-grid').forEach(el => skillObserver.observe(el));
 </script>
 </body>
 </html>
