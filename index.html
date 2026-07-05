@@ -5,59 +5,62 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Philimon Gyamerah — Robotics & Embedded Systems</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  /* ===== DARK THEME (default) ===== */
+  /* ============================================================
+     DESIGN TOKENS — "solder mask & copper" system
+     Dark  : deep PCB solder-mask green, copper traces, silkscreen text
+     Light : silkscreen paper, ink, oxidised copper
+  ============================================================ */
   :root,
   [data-theme="dark"] {
-    --bg: #040a0f;
-    --bg2: #080f17;
-    --surface: #0d1a26;
-    --surface2: #112233;
-    --cyan: #00e5ff;
-    --green: #39ff6e;
-    --amber: #ffb800;
-    --red: #ff3b3b;
-    --text: #c8dde8;
-    --muted: #567a90;
-    --border: rgba(0,229,255,0.15);
-    --glow: 0 0 20px rgba(0,229,255,0.3);
-    --glow-green: 0 0 20px rgba(57,255,110,0.3);
-    --pink: #ff397a;
-    --glow-pink: 0 0 20px rgba(255,57,122,0.3);
-    --nav-bg: rgba(4,10,15,0.85);
-    --scanline-opacity: 0.03;
-    --circuit-opacity: 0.04;
-    --toggle-bg: rgba(0,229,255,0.08);
-    --toggle-border: rgba(0,229,255,0.25);
-    --toggle-hover: rgba(0,229,255,0.18);
-    --heading-color: #ffffff;
+    --bg: #0b120e;
+    --bg2: #0e1712;
+    --surface: #121e17;
+    --surface2: #18271e;
+    --copper: #cf8a4e;
+    --copper-bright: #e6a969;
+    --status: #5fce9a;
+    --amber: #d9a441;
+    --red: #d96459;
+    --text: #c4d2c8;
+    --muted: #74897c;
+    --heading: #eef4ee;
+    --border: rgba(207,138,78,0.16);
+    --border-soft: rgba(196,210,200,0.09);
+    --nav-bg: rgba(11,18,14,0.88);
+    --dot-color: rgba(196,210,200,0.07);
+    --card-shadow: 0 14px 34px rgba(0,0,0,0.32);
+    --copper-tint: rgba(207,138,78,0.08);
+    --status-tint: rgba(95,206,154,0.09);
+    --amber-tint: rgba(217,164,65,0.09);
+    --toggle-bg: rgba(207,138,78,0.07);
+    --toggle-hover: rgba(207,138,78,0.15);
   }
 
-  /* ===== LIGHT THEME ===== */
   [data-theme="light"] {
-    --bg: #f0f5f8;
-    --bg2: #e2ecf3;
-    --surface: #ffffff;
-    --surface2: #d4e5ef;
-    --cyan: #006f9e;
-    --green: #1a7a38;
-    --amber: #a06800;
-    --red: #c0392b;
-    --text: #1c2e3a;
-    --muted: #5a7a8c;
-    --border: rgba(0,111,158,0.2);
-    --glow: 0 0 18px rgba(0,111,158,0.18);
-    --glow-green: 0 0 18px rgba(26,122,56,0.18);
-    --pink: #a0004a;
-    --glow-pink: 0 0 18px rgba(160,0,74,0.18);
-    --nav-bg: rgba(240,245,248,0.9);
-    --scanline-opacity: 0;
-    --circuit-opacity: 0.05;
-    --toggle-bg: rgba(0,111,158,0.08);
-    --toggle-border: rgba(0,111,158,0.28);
-    --toggle-hover: rgba(0,111,158,0.16);
-    --heading-color: #0d1e28;
+    --bg: #f3f1ea;
+    --bg2: #ebe8df;
+    --surface: #fbfaf6;
+    --surface2: #efece2;
+    --copper: #a05d28;
+    --copper-bright: #8a4e1e;
+    --status: #237950;
+    --amber: #96690f;
+    --red: #b6473c;
+    --text: #35443b;
+    --muted: #74806f;
+    --heading: #17241c;
+    --border: rgba(160,93,40,0.24);
+    --border-soft: rgba(23,36,28,0.1);
+    --nav-bg: rgba(243,241,234,0.9);
+    --dot-color: rgba(23,36,28,0.08);
+    --card-shadow: 0 12px 28px rgba(30,40,30,0.08);
+    --copper-tint: rgba(160,93,40,0.08);
+    --status-tint: rgba(35,121,80,0.09);
+    --amber-tint: rgba(150,105,15,0.1);
+    --toggle-bg: rgba(160,93,40,0.07);
+    --toggle-hover: rgba(160,93,40,0.14);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -66,113 +69,87 @@
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Outfit', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 15px;
     overflow-x: hidden;
-    cursor: none;
-    transition: background 0.4s ease, color 0.35s ease;
+    transition: background 0.35s ease, color 0.3s ease;
   }
 
-  /* ===== THEME TOGGLE BUTTON ===== */
-  .theme-toggle {
-    display: flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px; flex-shrink: 0;
-    border-radius: 10px;
-    border: 1px solid var(--toggle-border);
-    background: var(--toggle-bg);
-    cursor: pointer;
-    position: relative; overflow: hidden;
-    transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.2s;
-  }
-  .theme-toggle:hover {
-    background: var(--toggle-hover);
-    box-shadow: var(--glow);
-    transform: scale(1.06);
-  }
-  .theme-toggle svg {
-    position: absolute;
-    width: 18px; height: 18px;
-    color: var(--cyan);
-    transition: opacity 0.3s ease, transform 0.4s ease;
-    pointer-events: none;
-  }
-  /* Dark mode: show sun (click → go light), hide moon */
-  [data-theme="dark"] .icon-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
-  [data-theme="dark"] .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
-  /* Light mode: show moon (click → go dark), hide sun */
-  [data-theme="light"] .icon-sun  { opacity: 0; transform: rotate(90deg) scale(0.5); }
-  [data-theme="light"] .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
+  ::selection { background: var(--copper); color: var(--bg); }
 
-  /* ===== CURSOR ===== */
-  .cursor {
-    position: fixed; width: 10px; height: 10px;
-    background: var(--cyan); border-radius: 50%;
-    pointer-events: none; z-index: 9999;
-    transform: translate(-50%,-50%);
-    transition: width 0.2s, height 0.2s;
-    mix-blend-mode: screen;
-  }
-  [data-theme="light"] .cursor { mix-blend-mode: multiply; }
-  .cursor-ring {
-    position: fixed; width: 36px; height: 36px;
-    border: 1.5px solid rgba(0,229,255,0.5);
-    border-radius: 50%; pointer-events: none; z-index: 9998;
-    transform: translate(-50%,-50%);
-    transition: all 0.12s ease;
-  }
-  [data-theme="light"] .cursor-ring { border-color: rgba(0,111,158,0.4); }
-
-  /* ===== SCANLINE ===== */
-  body::after {
-    content: '';
-    position: fixed; inset: 0; z-index: 1;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px,
-      rgba(0,0,0,var(--scanline-opacity)) 2px, rgba(0,0,0,var(--scanline-opacity)) 4px);
-    pointer-events: none;
-    transition: opacity 0.4s;
-  }
-
-  /* ===== CIRCUIT BG ===== */
-  .circuit-bg {
+  /* ===== PERFBOARD BACKGROUND ===== */
+  .board-bg {
     position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background-image:
-      radial-gradient(circle at 20% 20%, rgba(0,229,255,0.04) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(57,255,110,0.03) 0%, transparent 50%);
+    background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+    background-size: 26px 26px;
+    transition: background 0.35s;
   }
-  [data-theme="light"] .circuit-bg {
-    background-image:
-      radial-gradient(circle at 20% 20%, rgba(0,111,158,0.05) 0%, transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(26,122,56,0.04) 0%, transparent 50%);
-  }
-  .circuit-bg svg {
+  .board-bg svg {
     position: absolute; inset: 0; width: 100%; height: 100%;
-    opacity: var(--circuit-opacity); transition: opacity 0.4s;
+    opacity: 0.55;
   }
+  .board-bg .trace { stroke: var(--copper); fill: none; stroke-width: 1; opacity: 0.14; }
+  .board-bg .pad   { fill: var(--copper); opacity: 0.2; }
+
+  main, nav, footer, .stats-bar { position: relative; z-index: 2; }
 
   /* ===== NAV ===== */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     display: flex; align-items: center; justify-content: space-between;
-    padding: 18px 40px;
+    padding: 16px 40px;
     background: var(--nav-bg);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    transition: background 0.4s, border-color 0.4s;
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border-soft);
+    transition: background 0.35s, border-color 0.35s;
   }
   .nav-logo {
-    font-family: 'Orbitron', monospace;
-    font-size: 13px; font-weight: 700;
-    color: var(--cyan); letter-spacing: 3px; text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 600;
+    color: var(--heading); letter-spacing: 2px;
+    display: flex; align-items: center; gap: 10px;
   }
-  .nav-logo span { color: var(--green); }
-  .nav-right { display: flex; align-items: center; gap: 32px; }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-logo .logo-pad {
+    width: 10px; height: 10px; border-radius: 2px;
+    background: var(--copper);
+    box-shadow: 0 0 0 3px var(--copper-tint);
+  }
+  .nav-logo span { color: var(--copper); }
+  .nav-right { display: flex; align-items: center; gap: 28px; }
+  .nav-links { display: flex; gap: 28px; list-style: none; }
   .nav-links a {
-    font-family: 'Space Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px; text-decoration: none;
-    color: var(--muted); letter-spacing: 2px; text-transform: uppercase;
-    transition: color 0.2s;
+    color: var(--muted); letter-spacing: 1.5px; text-transform: uppercase;
+    padding-bottom: 3px;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
   }
-  .nav-links a:hover { color: var(--cyan); }
+  .nav-links a:hover { color: var(--copper); border-bottom-color: var(--copper); }
+
+  /* ===== THEME TOGGLE ===== */
+  .theme-toggle {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: var(--toggle-bg);
+    cursor: pointer;
+    position: relative; overflow: hidden;
+    transition: background 0.25s, border-color 0.25s;
+  }
+  .theme-toggle:hover { background: var(--toggle-hover); }
+  .theme-toggle svg {
+    position: absolute;
+    width: 17px; height: 17px;
+    color: var(--copper);
+    transition: opacity 0.3s ease, transform 0.4s ease;
+    pointer-events: none;
+  }
+  [data-theme="dark"] .icon-sun  { opacity: 1; transform: rotate(0deg) scale(1); }
+  [data-theme="dark"] .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.5); }
+  [data-theme="light"] .icon-sun  { opacity: 0; transform: rotate(90deg) scale(0.5); }
+  [data-theme="light"] .icon-moon { opacity: 1; transform: rotate(0deg) scale(1); }
 
   /* ===== HAMBURGER ===== */
   .hamburger {
@@ -181,7 +158,7 @@
   }
   .hamburger span {
     display: block; width: 24px; height: 2px;
-    background: var(--cyan); transition: all 0.3s; transform-origin: center;
+    background: var(--copper); transition: all 0.3s; transform-origin: center;
   }
   .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .hamburger.open span:nth-child(2) { opacity: 0; }
@@ -189,363 +166,426 @@
 
   /* ===== MOBILE NAV ===== */
   .mobile-nav {
-    display: none; position: fixed; inset: 0;
-    z-index: 99;
-    flex-direction: column; align-items: center; justify-content: center; gap: 40px;
-    transition: background 0.4s;
+    display: none; position: fixed; inset: 0; z-index: 99;
+    flex-direction: column; align-items: center; justify-content: center; gap: 36px;
+    background: var(--bg);
   }
-  [data-theme="dark"]  .mobile-nav { background: rgba(4,10,15,0.97); }
-  [data-theme="light"] .mobile-nav { background: rgba(240,245,248,0.97); }
   .mobile-nav.open { display: flex; }
   .mobile-nav a {
-    font-family: 'Orbitron', monospace; font-size: 18px;
-    color: var(--text); text-decoration: none; letter-spacing: 4px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 16px;
+    color: var(--heading); text-decoration: none; letter-spacing: 3px;
     text-transform: uppercase; transition: color 0.2s;
   }
-  .mobile-nav a:hover { color: var(--cyan); }
+  .mobile-nav a:hover { color: var(--copper); }
 
   /* ===== HERO ===== */
   #hero {
-    position: relative; z-index: 2;
     min-height: 100vh; display: flex; align-items: center;
-    padding: 120px 40px 80px; overflow: hidden;
+    padding: 130px 40px 90px;
   }
   .hero-grid {
-    max-width: 1200px; margin: 0 auto; width: 100%;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    max-width: 1160px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 70px; align-items: center;
   }
   .hero-badge {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--border); padding: 6px 14px; border-radius: 100px;
-    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px;
-    color: var(--cyan); margin-bottom: 24px;
-    background: rgba(0,229,255,0.05);
-    transition: border-color 0.4s, color 0.4s, background 0.4s;
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--border); padding: 7px 14px; border-radius: 6px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+    color: var(--status); margin-bottom: 28px;
+    background: var(--status-tint);
+    text-transform: uppercase;
   }
-  [data-theme="light"] .hero-badge { background: rgba(0,111,158,0.06); }
   .hero-badge::before {
-    content: ''; width: 6px; height: 6px;
-    background: var(--green); border-radius: 50%; animation: pulse 2s infinite;
+    content: ''; width: 7px; height: 7px; border-radius: 50%;
+    background: var(--status); animation: blink 2.4s infinite;
   }
-  @keyframes pulse {
-    0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(57,255,110,0.5); }
-    50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(57,255,110,0); }
-  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
   .hero-name {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.1;
-    color: var(--heading-color); margin-bottom: 8px; transition: color 0.4s;
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(2.3rem, 5vw, 3.7rem);
+    font-weight: 800; line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--heading); margin-bottom: 14px;
+    transition: color 0.35s;
   }
   .hero-name .highlight {
     display: block;
-    background: linear-gradient(90deg, var(--cyan), var(--green));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    color: var(--copper);
   }
   .hero-title {
-    font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 3px;
-    color: var(--muted); text-transform: uppercase; margin-bottom: 28px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 2px;
+    color: var(--muted); text-transform: uppercase; margin-bottom: 26px;
+    display: flex; align-items: center; gap: 12px;
   }
-  .hero-desc { font-size: 15px; line-height: 1.8; color: var(--text); max-width: 480px; margin-bottom: 40px; }
-  .hero-desc strong { color: var(--cyan); font-weight: 600; }
-  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
-  .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--cyan); color: #fff;
-    padding: 12px 28px; border-radius: 4px;
-    font-family: 'Space Mono', monospace; font-size: 11px; font-weight: 700;
-    letter-spacing: 2px; text-transform: uppercase; text-decoration: none;
-    transition: all 0.2s; box-shadow: var(--glow);
+  .hero-title::before {
+    content: ''; width: 28px; height: 1px; background: var(--copper);
   }
-  [data-theme="dark"] .btn-primary { color: var(--bg); }
-  .btn-primary:hover { background: var(--green); box-shadow: var(--glow-green); transform: translateY(-2px); }
-  .btn-outline {
-    display: inline-flex; align-items: center; gap: 8px;
-    border: 1px solid var(--border); color: var(--text);
-    padding: 12px 28px; border-radius: 4px;
-    font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase; text-decoration: none; transition: all 0.2s;
-  }
-  .btn-outline:hover { border-color: var(--cyan); color: var(--cyan); box-shadow: var(--glow); }
+  .hero-desc { font-size: 15.5px; line-height: 1.8; color: var(--text); max-width: 480px; margin-bottom: 38px; }
+  .hero-desc strong { color: var(--copper-bright); font-weight: 600; }
+  [data-theme="light"] .hero-desc strong { color: var(--copper); }
 
-  /* PFP */
-  .hero-pfp-wrap { display: flex; justify-content: center; align-items: center; position: relative; }
-  .pfp-container { position: relative; width: 300px; height: 300px; overflow: visible; }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 34px; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: var(--copper); color: #14100b;
+    padding: 13px 26px; border-radius: 6px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600;
+    letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+  }
+  [data-theme="light"] .btn-primary { color: #fbf7f1; }
+  .btn-primary:hover { background: var(--copper-bright); transform: translateY(-2px); box-shadow: 0 8px 20px var(--copper-tint); }
+  [data-theme="light"] .btn-primary:hover { background: #8a4e1e; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 9px;
+    border: 1px solid var(--border); color: var(--text);
+    padding: 13px 26px; border-radius: 6px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px;
+    text-transform: uppercase; text-decoration: none; transition: all 0.2s;
+    background: transparent;
+  }
+  .btn-outline:hover { border-color: var(--copper); color: var(--copper); transform: translateY(-2px); }
+
+  .hero-socials { display: flex; gap: 20px; flex-wrap: wrap; }
+  .social-link {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1px;
+    color: var(--muted); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .social-link:hover { color: var(--copper); }
+  .social-link svg { width: 14px; height: 14px; }
+
+  /* ===== HERO PHOTO — schematic callouts ===== */
+  .hero-pfp-wrap { display: flex; justify-content: center; align-items: center; }
+  .pfp-container { position: relative; width: 320px; height: 320px; }
   .pfp-ring {
-    position: absolute; inset: -12px; border-radius: 50%;
-    border: 1.5px solid transparent;
-    background: linear-gradient(var(--bg), var(--bg)) padding-box,
-                linear-gradient(135deg, var(--cyan), var(--green), var(--cyan)) border-box;
-    animation: spin 8s linear infinite;
+    position: absolute; inset: -14px; border-radius: 50%;
+    border: 1px solid var(--border);
   }
-  .pfp-ring-2 {
-    position: absolute; inset: -24px; border-radius: 50%;
-    border: 1px dashed var(--border);
-    animation: spin 16s linear infinite reverse;
+  .pfp-ring::before, .pfp-ring::after {
+    content: ''; position: absolute; width: 8px; height: 8px; border-radius: 50%;
+    background: var(--copper);
   }
-  @keyframes spin { to { transform: rotate(360deg); } }
+  .pfp-ring::before { top: 8%; right: 6%; }
+  .pfp-ring::after  { bottom: 10%; left: 4%; width: 6px; height: 6px; opacity: 0.6; }
+  .pfp-tick {
+    position: absolute; inset: -26px; border-radius: 50%;
+    border: 1px dashed var(--border-soft);
+  }
   .pfp-img {
     width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
     border: 3px solid var(--surface2); position: relative; z-index: 1;
     background: var(--surface2);
+    display: block;
   }
-  .pfp-badge, .pfp-badge-2, .pfp-badge-3 {
+  /* callout labels with leader lines, like a schematic annotation */
+  .callout {
     position: absolute; z-index: 3;
-    background: var(--surface); border-radius: 8px; padding: 8px 12px;
-    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px;
-    white-space: nowrap; top: 50%; left: 50%;
-    transition: background 0.4s;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 6px; padding: 7px 11px;
+    font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 1px;
+    color: var(--copper); white-space: nowrap; text-transform: uppercase;
+    box-shadow: var(--card-shadow);
+    display: flex; align-items: center; gap: 7px;
+    transition: background 0.35s, border-color 0.35s;
   }
-  .pfp-badge  { color: var(--cyan);  border: 1px solid var(--border);              box-shadow: var(--glow);       animation: orbit1 12s linear infinite; }
-  .pfp-badge-2{ color: var(--green); border: 1px solid rgba(57,255,110,0.2);        box-shadow: var(--glow-green); animation: orbit2 12s linear infinite; }
-  .pfp-badge-3{ color: var(--pink);  border: 1px solid rgba(255,57,122,0.2);        box-shadow: var(--glow-pink);  animation: orbit3 12s linear infinite; }
-  @keyframes orbit1 {
-    0%   { transform: translate(-50%,-50%) rotate(0deg)   translateX(190px) rotate(0deg); }
-    100% { transform: translate(-50%,-50%) rotate(360deg) translateX(190px) rotate(-360deg); }
+  .callout svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .callout::before {
+    content: ''; position: absolute; width: 26px; height: 1px;
+    background: var(--copper); opacity: 0.55;
   }
-  @keyframes orbit2 {
-    0%   { transform: translate(-50%,-50%) rotate(120deg) translateX(190px) rotate(-120deg); }
-    100% { transform: translate(-50%,-50%) rotate(480deg) translateX(190px) rotate(-480deg); }
+  .callout::after {
+    content: ''; position: absolute; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--copper);
   }
-  @keyframes orbit3 {
-    0%   { transform: translate(-50%,-50%) rotate(240deg) translateX(190px) rotate(-240deg); }
-    100% { transform: translate(-50%,-50%) rotate(600deg) translateX(190px) rotate(-600deg); }
-  }
-
-  /* SOCIALS */
-  .hero-socials { display: flex; gap: 12px; margin-top: 32px; flex-wrap: wrap; }
-  .social-link {
-    display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 4px;
-    border: 1px solid var(--border); color: var(--muted); text-decoration: none;
-    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; transition: all 0.2s;
-  }
-  .social-link:hover { color: var(--cyan); border-color: var(--cyan); }
-
-  /* ===== SECTION COMMONS ===== */
-  section { position: relative; z-index: 2; }
-  .container { max-width: 1200px; margin: 0 auto; padding: 100px 40px; }
-  .section-label {
-    font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 4px;
-    color: var(--cyan); text-transform: uppercase; margin-bottom: 12px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-label::before { content: ''; display: block; width: 32px; height: 1px; background: var(--cyan); }
-  .section-title {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700;
-    color: var(--heading-color); margin-bottom: 16px; transition: color 0.4s;
-  }
-  .section-divider {
-    width: 60px; height: 3px;
-    background: linear-gradient(90deg, var(--cyan), var(--green));
-    margin-bottom: 60px; border-radius: 2px;
-  }
+  .callout-1 { top: 4%; right: -12%; }
+  .callout-1::before { left: -26px; top: 50%; }
+  .callout-1::after  { left: -30px; top: calc(50% - 2px); }
+  .callout-2 { bottom: 26%; left: -22%; }
+  .callout-2::before { right: -26px; top: 50%; }
+  .callout-2::after  { right: -30px; top: calc(50% - 2px); }
+  .callout-3 { bottom: -6%; right: 2%; }
+  .callout-3::before { left: -26px; top: 50%; transform: rotate(-30deg); transform-origin: right; }
+  .callout-3::after  { left: -34px; top: calc(50% - 14px); }
 
   /* ===== STATS BAR ===== */
-  .stats-bar {
-    position: relative; z-index: 2;
-    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-    background: var(--surface); transition: background 0.4s, border-color 0.4s;
-  }
+  .stats-bar { border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft); background: var(--bg2); transition: background 0.35s; }
   .stats-inner {
-    max-width: 1200px; margin: 0 auto; padding: 32px 40px;
-    display: grid; grid-template-columns: repeat(4,1fr);
+    max-width: 1160px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    padding: 34px 40px;
   }
-  .stat-item { text-align: center; padding: 0 20px; border-right: 1px solid var(--border); transition: border-color 0.4s; }
+  .stat-item {
+    display: flex; flex-direction: column; gap: 6px; align-items: center;
+    border-right: 1px solid var(--border-soft); padding: 0 16px;
+  }
   .stat-item:last-child { border-right: none; }
   .stat-num {
-    font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 900;
-    background: linear-gradient(90deg, var(--cyan), var(--green));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block;
+    font-family: 'Archivo', sans-serif; font-size: 1.9rem; font-weight: 800;
+    color: var(--heading); letter-spacing: -0.02em;
   }
   .stat-label {
-    font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px;
-    color: var(--muted); text-transform: uppercase; margin-top: 4px; display: block;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1.5px;
+    color: var(--muted); text-transform: uppercase; text-align: center;
+  }
+
+  /* ===== SECTIONS ===== */
+  section { transition: background 0.35s; }
+  .container { max-width: 1160px; margin: 0 auto; padding: 96px 40px; }
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px;
+    color: var(--copper); text-transform: uppercase; margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::before {
+    content: ''; width: 9px; height: 9px; border: 1.5px solid var(--copper);
+    border-radius: 2px;
+  }
+  .section-title {
+    font-family: 'Archivo', sans-serif;
+    font-size: clamp(1.7rem, 3.4vw, 2.5rem); font-weight: 800; line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: var(--heading); margin-bottom: 22px; transition: color 0.35s;
+  }
+  /* copper trace divider: line — pad — line */
+  .section-divider {
+    display: flex; align-items: center; gap: 0; margin-bottom: 54px; height: 9px;
+  }
+  .section-divider::before {
+    content: ''; width: 64px; height: 1.5px; background: var(--copper);
+  }
+  .section-divider::after {
+    content: ''; width: 9px; height: 9px; border-radius: 50%;
+    border: 1.5px solid var(--copper); margin-left: -1px;
   }
 
   /* ===== ABOUT ===== */
-  #about .about-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
-  .about-text p { font-size: 15px; line-height: 1.85; color: var(--text); margin-bottom: 20px; }
-  .about-text p strong { color: var(--cyan); font-weight: 600; }
-  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .skill-chip {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 6px; padding: 14px 16px; transition: all 0.2s;
+  .about-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: 70px; align-items: start; }
+  .about-text p { font-size: 15px; line-height: 1.85; margin-bottom: 20px; }
+  .about-text strong { color: var(--copper-bright); font-weight: 600; }
+  [data-theme="light"] .about-text strong { color: var(--copper); }
+
+  .skills-head {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    color: var(--copper); margin-bottom: 20px; text-transform: uppercase;
   }
-  .skill-chip:hover { border-color: var(--cyan); box-shadow: var(--glow); transform: translateY(-2px); }
-  .skill-chip-name { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--cyan); margin-bottom: 4px; }
-  .skill-chip-level { height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; margin-top: 8px; }
-  .skill-chip-level-fill { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--green)); border-radius: 2px; transition: width 1s ease; }
+  .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .skill-chip {
+    background: var(--surface); border: 1px solid var(--border-soft);
+    border-radius: 8px; padding: 16px;
+    transition: border-color 0.25s, background 0.35s;
+  }
+  .skill-chip:hover { border-color: var(--border); }
+  .skill-chip-name { font-size: 13px; font-weight: 600; color: var(--heading); margin-bottom: 3px; transition: color 0.35s; }
+  .skill-chip-sub { font-size: 11px; color: var(--muted); }
+  .skill-chip-level { height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; margin-top: 10px; }
+  .skill-chip-level-fill { height: 100%; background: var(--copper); border-radius: 2px; transition: width 1s ease; }
 
   /* ===== PROJECTS ===== */
-  #projects { background: var(--bg2); transition: background 0.4s; }
-  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+  #projects { background: var(--bg2); }
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 22px; }
   .project-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: 12px; overflow: hidden; transition: all 0.3s; position: relative;
+    background: var(--surface); border: 1px solid var(--border-soft);
+    border-radius: 10px; overflow: hidden; position: relative;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s, background 0.35s;
+    display: flex; flex-direction: column;
   }
-  .project-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--cyan), var(--green)); opacity: 0; transition: opacity 0.3s;
+  .project-card:hover { transform: translateY(-5px); border-color: var(--border); box-shadow: var(--card-shadow); }
+  .project-header { padding: 26px 26px 0; display: flex; justify-content: space-between; align-items: flex-start; }
+  .project-icon {
+    width: 46px; height: 46px; background: var(--copper-tint);
+    border: 1px solid var(--border); border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--copper);
   }
-  .project-card:hover { transform: translateY(-6px); border-color: rgba(0,229,255,0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.12), var(--glow); }
-  [data-theme="light"] .project-card:hover { box-shadow: 0 16px 40px rgba(0,0,0,0.08), var(--glow); }
-  .project-card:hover::before { opacity: 1; }
-  .project-header { padding: 28px 28px 0; display: flex; justify-content: space-between; align-items: flex-start; }
-  .project-icon { width: 48px; height: 48px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-  .project-status { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; padding: 4px 10px; border-radius: 100px; text-transform: uppercase; }
-  .status-active  { background: rgba(57,255,110,0.1); color: var(--green); border: 1px solid rgba(57,255,110,0.2); }
-  .status-complete{ background: rgba(0,229,255,0.1);  color: var(--cyan);  border: 1px solid rgba(0,229,255,0.2); }
-  [data-theme="light"] .status-active   { background: rgba(26,122,56,0.08);  border-color: rgba(26,122,56,0.25); }
-  [data-theme="light"] .status-complete { background: rgba(0,111,158,0.08); border-color: rgba(0,111,158,0.25); }
-  .project-body { padding: 20px 28px 28px; }
-  .project-title { font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 700; color: var(--heading-color); margin-bottom: 10px; transition: color 0.4s; }
-  .project-date { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--muted); margin-bottom: 14px; }
-  .project-desc { font-size: 13px; line-height: 1.75; color: var(--text); margin-bottom: 20px; }
-  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-  .tag { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; padding: 4px 10px; border-radius: 4px; background: rgba(0,229,255,0.08); color: var(--cyan); border: 1px solid rgba(0,229,255,0.15); text-transform: uppercase; }
-  .tag.green { background: rgba(57,255,110,0.08); color: var(--green); border-color: rgba(57,255,110,0.15); }
-  .tag.amber { background: rgba(255,184,0,0.08); color: var(--amber); border-color: rgba(255,184,0,0.15); }
-  [data-theme="light"] .tag       { background: rgba(0,111,158,0.07);  border-color: rgba(0,111,158,0.18); }
-  [data-theme="light"] .tag.green { background: rgba(26,122,56,0.07);  border-color: rgba(26,122,56,0.18); }
-  [data-theme="light"] .tag.amber { background: rgba(160,104,0,0.07); border-color: rgba(160,104,0,0.18); }
-  .project-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--cyan); text-decoration: none; text-transform: uppercase; transition: gap 0.2s; }
-  .project-link:hover { gap: 10px; }
+  .project-icon svg { width: 21px; height: 21px; }
+  .project-status {
+    font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    padding: 4px 10px; border-radius: 5px; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .project-status::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+  .status-active   { background: var(--status-tint); color: var(--status); border: 1px solid var(--status-tint); }
+  .status-complete { background: var(--copper-tint); color: var(--copper); border: 1px solid var(--copper-tint); }
+  .project-body { padding: 20px 26px 26px; display: flex; flex-direction: column; flex: 1; }
+  .project-date { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
+  .project-title { font-family: 'Archivo', sans-serif; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; color: var(--heading); margin-bottom: 10px; transition: color 0.35s; }
+  .project-desc { font-size: 13.5px; line-height: 1.75; color: var(--text); margin-bottom: 20px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .tag {
+    font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px;
+    padding: 4px 9px; border-radius: 4px;
+    background: var(--copper-tint); color: var(--copper); border: 1px solid var(--border);
+    text-transform: uppercase;
+  }
+  .tag.green { background: var(--status-tint); color: var(--status); border-color: var(--status-tint); }
+  .tag.amber { background: var(--amber-tint); color: var(--amber); border-color: var(--amber-tint); }
+  .project-link {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: auto;
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; letter-spacing: 1px;
+    color: var(--copper); text-decoration: none; text-transform: uppercase;
+    transition: gap 0.2s;
+  }
+  .project-link:hover { gap: 12px; }
 
   /* ===== CERTS ===== */
-  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-  .cert-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 24px; display: flex; flex-direction: column; gap: 14px; transition: all 0.3s; position: relative; overflow: hidden; }
-  .cert-card::after { content: ''; position: absolute; right: -20px; bottom: -20px; width: 80px; height: 80px; background: var(--cyan); opacity: 0.03; border-radius: 50%; }
-  .cert-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-4px); box-shadow: var(--glow); }
-  .cert-issuer { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
-  .cert-name { font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 600; color: var(--heading-color); line-height: 1.4; transition: color 0.4s; }
-  .cert-date { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--muted); }
-  .cert-link { display: inline-flex; align-items: center; gap: 6px; font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--cyan); text-decoration: none; text-transform: uppercase; margin-top: auto; transition: gap 0.2s; }
-  .cert-link:hover { gap: 10px; }
-  .cert-icon { width: 40px; height: 40px; background: var(--surface2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 1px solid var(--border); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 18px; }
+  .cert-card {
+    background: var(--surface); border: 1px solid var(--border-soft);
+    border-radius: 9px; padding: 24px;
+    display: flex; flex-direction: column; gap: 13px;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s, background 0.35s;
+  }
+  .cert-card:hover { border-color: var(--border); transform: translateY(-4px); box-shadow: var(--card-shadow); }
+  .cert-icon {
+    width: 40px; height: 40px; background: var(--copper-tint);
+    border-radius: 8px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--copper);
+  }
+  .cert-icon svg { width: 18px; height: 18px; }
+  .cert-issuer { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
+  .cert-name { font-size: 14.5px; font-weight: 600; color: var(--heading); line-height: 1.4; transition: color 0.35s; }
+  .cert-date { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--muted); }
+  .cert-skills { font-size: 12px; color: var(--muted); line-height: 1.6; }
+  .cert-link {
+    display: inline-flex; align-items: center; gap: 7px; margin-top: auto;
+    font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: 1px;
+    color: var(--copper); text-decoration: none; text-transform: uppercase;
+    transition: gap 0.2s;
+  }
+  .cert-link:hover { gap: 11px; }
 
   /* ===== CONTACT ===== */
-  #contact { background: var(--bg2); transition: background 0.4s; }
-  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-  .contact-info h3 { font-family: 'Orbitron', monospace; font-size: 1.2rem; color: var(--heading-color); margin-bottom: 16px; transition: color 0.4s; }
-  .contact-info p { font-size: 14px; line-height: 1.8; color: var(--text); margin-bottom: 40px; }
-  .contact-items { display: flex; flex-direction: column; gap: 16px; }
-  .contact-item { display: flex; align-items: center; gap: 16px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; text-decoration: none; transition: all 0.2s; }
-  .contact-item:hover { border-color: var(--cyan); box-shadow: var(--glow); }
-  .contact-item-icon { width: 36px; height: 36px; min-width: 36px; background: rgba(0,111,158,0.1); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-  [data-theme="dark"] .contact-item-icon { background: rgba(0,229,255,0.1); }
+  #contact { background: var(--bg2); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
+  .contact-info h3 {
+    font-family: 'Archivo', sans-serif; font-size: 1.35rem; font-weight: 700;
+    letter-spacing: -0.01em; line-height: 1.3;
+    color: var(--heading); margin-bottom: 16px; transition: color 0.35s;
+  }
+  .contact-info p { font-size: 14.5px; line-height: 1.8; margin-bottom: 36px; }
+  .contact-items { display: flex; flex-direction: column; gap: 14px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 16px; padding: 16px 20px;
+    background: var(--surface); border: 1px solid var(--border-soft); border-radius: 8px;
+    text-decoration: none; transition: border-color 0.2s, transform 0.2s, background 0.35s;
+  }
+  .contact-item:hover { border-color: var(--copper); transform: translateX(4px); }
+  .contact-item-icon {
+    width: 36px; height: 36px; min-width: 36px;
+    background: var(--copper-tint); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--copper);
+  }
+  .contact-item-icon svg { width: 16px; height: 16px; }
   .contact-item-text { flex: 1; }
-  .contact-item-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
+  .contact-item-label { font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
   .contact-item-value { font-size: 13px; color: var(--text); word-break: break-all; }
-  .socials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .social-card { padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; transition: all 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
-  .social-card:hover { transform: translateY(-4px); border-color: var(--cyan); box-shadow: var(--glow); }
-  .social-card-icon { font-size: 28px; }
-  .social-card-name { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--cyan); text-transform: uppercase; }
+
+  .socials-head {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 2px;
+    color: var(--copper); margin-bottom: 20px; text-transform: uppercase;
+  }
+  .socials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .social-card {
+    padding: 22px 18px; background: var(--surface); border: 1px solid var(--border-soft);
+    border-radius: 9px; text-decoration: none;
+    display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s, background 0.35s;
+  }
+  .social-card:hover { transform: translateY(-4px); border-color: var(--copper); box-shadow: var(--card-shadow); }
+  .social-card-icon { color: var(--copper); }
+  .social-card-icon svg { width: 24px; height: 24px; }
+  .social-card-name { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: 1px; color: var(--heading); text-transform: uppercase; transition: color 0.35s; }
   .social-card-handle { font-size: 12px; color: var(--muted); }
 
   /* ===== FOOTER ===== */
-  footer { position: relative; z-index: 2; border-top: 1px solid var(--border); padding: 32px 40px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; transition: border-color 0.4s; }
-  .footer-brand { font-family: 'Orbitron', monospace; font-size: 12px; letter-spacing: 3px; color: var(--muted); }
-  .footer-brand span { color: var(--cyan); }
-  .footer-copy { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+  footer {
+    border-top: 1px solid var(--border-soft); padding: 30px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 12px; transition: border-color 0.35s;
+  }
+  .footer-brand { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; color: var(--muted); }
+  .footer-brand span { color: var(--copper); }
+  .footer-copy {
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--muted); letter-spacing: 1px;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .flag-gh { width: 16px; height: 11px; border-radius: 2px; display: inline-block; }
 
   /* ===== FADE IN ===== */
-  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
   .fade-in.visible { opacity: 1; transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in { opacity: 1; transform: none; transition: none; }
+    .hero-badge::before { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--copper); outline-offset: 3px; border-radius: 4px;
+  }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 900px) {
-    nav { padding: 16px 24px; }
+    nav { padding: 14px 22px; }
     .nav-links { display: none; }
     .hamburger { display: flex; }
-    #hero { padding: 100px 24px 60px; }
-    .hero-grid { grid-template-columns: 1fr; gap: 50px; }
+    #hero { padding: 110px 22px 60px; }
+    .hero-grid { grid-template-columns: 1fr; gap: 56px; }
     .hero-pfp-wrap { order: -1; }
-    .pfp-container { width: 220px; height: 220px; }
-    .pfp-badge,.pfp-badge-2,.pfp-badge-3 { font-size: 7px; padding: 5px 8px; }
-    .pfp-badge   { animation: orbit1-md 12s linear infinite; }
-    .pfp-badge-2 { animation: orbit2-md 12s linear infinite; }
-    .pfp-badge-3 { animation: orbit3-md 12s linear infinite; }
-    .stats-inner { grid-template-columns: repeat(2,1fr); gap: 20px; }
-    .stat-item { border-right: none; border-bottom: 1px solid var(--border); padding: 16px 0; }
-    .stat-item:nth-child(odd) { border-right: 1px solid var(--border); }
-    .container { padding: 70px 24px; }
-    #about .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .skills-grid { grid-template-columns: 1fr 1fr; }
+    .pfp-container { width: 230px; height: 230px; }
+    .callout { font-size: 8.5px; padding: 6px 9px; }
+    .callout-1 { right: -18%; }
+    .callout-2 { left: -20%; }
+    .stats-inner { grid-template-columns: repeat(2,1fr); gap: 22px; padding: 26px 22px; }
+    .stat-item { border-right: none; border-bottom: 1px solid var(--border-soft); padding: 0 0 16px; }
+    .stat-item:nth-child(odd) { border-right: 1px solid var(--border-soft); }
+    .stat-item:nth-child(3), .stat-item:nth-child(4) { border-bottom: none; padding-bottom: 0; }
+    .container { padding: 68px 22px; }
+    .about-grid { grid-template-columns: 1fr; gap: 44px; }
     .projects-grid { grid-template-columns: 1fr; }
-    .contact-grid { grid-template-columns: 1fr; gap: 50px; }
-    .socials-grid { grid-template-columns: 1fr 1fr; }
+    .contact-grid { grid-template-columns: 1fr; gap: 48px; }
     footer { flex-direction: column; gap: 12px; text-align: center; padding: 24px; }
-    .cursor,.cursor-ring { display: none; }
-    body { cursor: auto; }
   }
   @media (max-width: 480px) {
-    .hero-name { font-size: 1.8rem; }
-    .pfp-container { width: 180px; height: 180px; }
-    .pfp-badge,.pfp-badge-2,.pfp-badge-3 { font-size: 6px; padding: 4px 6px; letter-spacing: 0.5px; }
-    .pfp-badge   { animation: orbit1-sm 12s linear infinite; }
-    .pfp-badge-2 { animation: orbit2-sm 12s linear infinite; }
-    .pfp-badge-3 { animation: orbit3-sm 12s linear infinite; }
-    .stats-inner { padding: 20px 16px; }
+    .hero-name { font-size: 2rem; }
+    .pfp-container { width: 190px; height: 190px; }
+    .callout { position: static; box-shadow: none; }
+    .callout::before, .callout::after { display: none; }
+    .pfp-callouts-mobile {
+      display: flex !important; flex-wrap: wrap; justify-content: center;
+      gap: 8px; margin-top: 46px;
+    }
     .hero-ctas { flex-direction: column; }
-    .btn-primary,.btn-outline { justify-content: center; }
-    .certs-grid { grid-template-columns: 1fr; }
+    .btn-primary, .btn-outline { justify-content: center; }
+    .certs-grid, .skills-grid { grid-template-columns: 1fr; }
     .theme-toggle { width: 34px; height: 34px; }
-  }
-  @keyframes orbit1-md {
-    0%   { transform: translate(-50%,-50%) rotate(0deg)   translateX(140px) rotate(0deg); }
-    100% { transform: translate(-50%,-50%) rotate(360deg) translateX(140px) rotate(-360deg); }
-  }
-  @keyframes orbit2-md {
-    0%   { transform: translate(-50%,-50%) rotate(120deg) translateX(140px) rotate(-120deg); }
-    100% { transform: translate(-50%,-50%) rotate(480deg) translateX(140px) rotate(-480deg); }
-  }
-  @keyframes orbit3-md {
-    0%   { transform: translate(-50%,-50%) rotate(240deg) translateX(140px) rotate(-240deg); }
-    100% { transform: translate(-50%,-50%) rotate(600deg) translateX(140px) rotate(-600deg); }
-  }
-  @keyframes orbit1-sm {
-    0%   { transform: translate(-50%,-50%) rotate(0deg)   translateX(120px) rotate(0deg); }
-    100% { transform: translate(-50%,-50%) rotate(360deg) translateX(120px) rotate(-360deg); }
-  }
-  @keyframes orbit2-sm {
-    0%   { transform: translate(-50%,-50%) rotate(120deg) translateX(120px) rotate(-120deg); }
-    100% { transform: translate(-50%,-50%) rotate(480deg) translateX(120px) rotate(-480deg); }
-  }
-  @keyframes orbit3-sm {
-    0%   { transform: translate(-50%,-50%) rotate(240deg) translateX(120px) rotate(-240deg); }
-    100% { transform: translate(-50%,-50%) rotate(600deg) translateX(120px) rotate(-600deg); }
   }
 </style>
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
-
-<div class="circuit-bg">
-  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#00e5ff" stroke-width="0.5"/>
-      </pattern>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#grid)"/>
-    <line x1="120" y1="0" x2="120" y2="300" stroke="#00e5ff" stroke-width="1.5"/>
-    <line x1="120" y1="300" x2="400" y2="300" stroke="#00e5ff" stroke-width="1.5"/>
-    <circle cx="400" cy="300" r="4" fill="#00e5ff"/>
-    <line x1="400" y1="300" x2="400" y2="500" stroke="#00e5ff" stroke-width="1.5"/>
-    <line x1="1200" y1="900" x2="1200" y2="600" stroke="#39ff6e" stroke-width="1.5"/>
-    <line x1="1200" y1="600" x2="900" y2="600" stroke="#39ff6e" stroke-width="1.5"/>
-    <circle cx="900" cy="600" r="4" fill="#39ff6e"/>
-    <line x1="700" y1="0" x2="700" y2="150" stroke="#00e5ff" stroke-width="1"/>
-    <circle cx="700" cy="150" r="3" fill="#00e5ff"/>
+<!-- PERFBOARD + COPPER TRACE BACKGROUND -->
+<div class="board-bg">
+  <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path class="trace" d="M 120 0 V 250 H 380 V 470"/>
+    <circle class="pad" cx="380" cy="470" r="4"/>
+    <path class="trace" d="M 1320 900 V 640 H 1020 V 520"/>
+    <circle class="pad" cx="1020" cy="520" r="4"/>
+    <path class="trace" d="M 720 0 V 130 H 880"/>
+    <circle class="pad" cx="880" cy="130" r="3.5"/>
+    <path class="trace" d="M 0 760 H 220 V 620"/>
+    <circle class="pad" cx="220" cy="620" r="3.5"/>
   </svg>
 </div>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">PHIL<span>.JR</span></div>
+  <div class="nav-logo"><span class="logo-pad"></span>PHIL<span>.JR</span></div>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
@@ -554,9 +594,7 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
 
-    <!-- ☀️/🌙 THEME TOGGLE -->
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light mode">
-      <!-- Sun — visible in dark mode -->
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="5"/>
         <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
@@ -564,7 +602,6 @@
         <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
         <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
       </svg>
-      <!-- Moon — visible in light mode -->
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
       </svg>
@@ -584,11 +621,13 @@
   <a href="#contact" onclick="closeMobileNav()">Contact</a>
 </div>
 
+<main>
+
 <!-- HERO -->
 <section id="hero">
   <div class="hero-grid">
     <div class="hero-content">
-      <div class="hero-badge">AVAILABLE FOR MENTORSHIP & COLLABORATION</div>
+      <div class="hero-badge">Available for mentorship &amp; collaboration</div>
       <h1 class="hero-name">
         Gyamerah<br>
         <span class="highlight">Philimon Jr.</span>
@@ -600,38 +639,52 @@
       <div class="hero-ctas">
         <a href="#projects" class="btn-primary">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-          VIEW PROJECTS
+          View Projects
         </a>
         <a href="#contact" class="btn-outline">
           <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-          GET IN TOUCH
+          Get in Touch
         </a>
       </div>
       <div class="hero-socials">
-        <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" class="social-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
           LinkedIn
         </a>
-        <a href="https://www.youtube.com/@Phil_Gy" target="_blank" class="social-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+        <a href="https://www.youtube.com/@Phil_Gy" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
           YouTube
         </a>
-        <a href="https://www.instagram.com/_phil.jr" target="_blank" class="social-link">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <a href="https://www.instagram.com/_phil.jr" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           Instagram
         </a>
-        <a href="https://www.tiktok.com/@_phil.jr" target="_blank" class="social-link">🎵 TikTok</a>
+        <a href="https://www.tiktok.com/@_phil.jr" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.04-.1z"/></svg>
+          TikTok
+        </a>
       </div>
     </div>
 
     <div class="hero-pfp-wrap">
       <div class="pfp-container">
+        <div class="pfp-tick"></div>
         <div class="pfp-ring"></div>
-        <div class="pfp-ring-2"></div>
         <img src="phil.jpeg" class="pfp-img" alt="Philimon">
-        <div class="pfp-badge">🚁 DRONE/UAV</div>
-        <div class="pfp-badge-2">🤖 MECHATRONICS</div>
-        <div class="pfp-badge-3">🧑‍💻 EMBEDDED ENG</div>
+        <div class="pfp-callouts-mobile" style="display: contents;">
+          <div class="callout callout-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="5" r="2.4"/><circle cx="19" cy="5" r="2.4"/><circle cx="5" cy="19" r="2.4"/><circle cx="19" cy="19" r="2.4"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M7 7l2.5 2.5M17 7l-2.5 2.5M7 17l2.5-2.5M17 17l-2.5-2.5"/></svg>
+            Drone / UAV
+          </div>
+          <div class="callout callout-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.2 4.2l2.8 2.8M17 17l2.8 2.8M1 12h4M19 12h4M4.2 19.8L7 17M17 7l2.8-2.8"/></svg>
+            Mechatronics
+          </div>
+          <div class="callout callout-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg>
+            Embedded Eng
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -643,7 +696,7 @@
     <div class="stat-item"><span class="stat-num">12+</span><span class="stat-label">Projects Built</span></div>
     <div class="stat-item"><span class="stat-num">8+</span><span class="stat-label">Certifications</span></div>
     <div class="stat-item"><span class="stat-num">2023</span><span class="stat-label">MS Imagine Cup</span></div>
-    <div class="stat-item"><span class="stat-num">∞</span><span class="stat-label">Passion Level</span></div>
+    <div class="stat-item"><span class="stat-num">&infin;</span><span class="stat-label">Passion Level</span></div>
   </div>
 </div>
 
@@ -661,16 +714,16 @@
         <p>Looking to connect with professionals, mentors, and collaborators who share a vision for an <strong>automated, robotics-driven future.</strong></p>
       </div>
       <div class="fade-in">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--cyan);margin-bottom:20px;text-transform:uppercase;">Core Skills & Technologies</div>
+        <div class="skills-head">Core Skills &amp; Technologies</div>
         <div class="skills-grid">
-          <div class="skill-chip"><div class="skill-chip-name">Microcontrollers / Micro-computers</div><div style="font-size:11px;color:var(--muted)">Embedded firmware</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:85%"></div></div></div>
-          <div class="skill-chip"><div class="skill-chip-name">Python,Micro-Python / C / C++</div><div style="font-size:11px;color:var(--muted)">Programming</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:75%"></div></div></div>
-          <div class="skill-chip"><div class="skill-chip-name">IoT Systems</div><div style="font-size:11px;color:var(--muted)">Sensors & comms</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:80%"></div></div></div>
-          <div class="skill-chip"><div class="skill-chip-name">Drone Build</div><div style="font-size:11px;color:var(--muted)">RC & flight systems</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:78%"></div></div></div>
-          <div class="skill-chip"><div class="skill-chip-name">AI / ML</div><div style="font-size:11px;color:var(--muted)">Applied intelligence</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:60%"></div></div></div>
-          <div class="skill-chip"><div class="skill-chip-name">3D Printing</div><div style="font-size:11px;color:var(--muted)">CAD, 3D-modelling</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:70%"></div></div></div>
-          <div class="skill-chip"><div class="skill-chip-name">JavaScript / CSS</div><div style="font-size:11px;color:var(--muted)">Web frontend</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:65%"></div></div></div>
-          <div class="skill-chip"><div class="skill-chip-name">Ethical Hacking</div><div style="font-size:11px;color:var(--muted)">Cybersecurity / Linux</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:55%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">Microcontrollers / Micro-computers</div><div class="skill-chip-sub">Embedded firmware</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:85%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">Python, MicroPython / C / C++</div><div class="skill-chip-sub">Programming</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:75%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">IoT Systems</div><div class="skill-chip-sub">Sensors &amp; comms</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:80%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">Drone Build</div><div class="skill-chip-sub">RC &amp; flight systems</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:78%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">AI / ML</div><div class="skill-chip-sub">Applied intelligence</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:60%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">3D Printing</div><div class="skill-chip-sub">CAD, 3D-modelling</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:70%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">JavaScript / CSS</div><div class="skill-chip-sub">Web frontend</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:65%"></div></div></div>
+          <div class="skill-chip"><div class="skill-chip-name">Ethical Hacking</div><div class="skill-chip-sub">Cybersecurity / Linux</div><div class="skill-chip-level"><div class="skill-chip-level-fill" style="width:55%"></div></div></div>
         </div>
       </div>
     </div>
@@ -686,46 +739,66 @@
     <div class="projects-grid">
 
       <div class="project-card fade-in">
-        <div class="project-header"><div class="project-icon">🌡️</div><span class="project-status status-active">Active</span></div>
+        <div class="project-header">
+          <div class="project-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 14.76V5a2 2 0 00-4 0v9.76a4.5 4.5 0 104 0z"/><line x1="12" y1="9" x2="12" y2="14"/></svg>
+          </div>
+          <span class="project-status status-active">Active</span>
+        </div>
         <div class="project-body">
           <div class="project-date">JAN 2026 – PRESENT</div>
           <div class="project-title">CLIMAS V3</div>
           <p class="project-desc">A compact indoor safety device combining climate monitoring (DHT22) and gas detection (MQ-9) into one embedded product. Features emergency GSM calling via SIM800L, OLED display, WiFi + OpenWeather API for outdoor comparison, non-blocking firmware, and a custom 3D-printed enclosure.</p>
           <div class="project-tags"><span class="tag">ESP8266</span><span class="tag">IoT</span><span class="tag green">GSM</span><span class="tag amber">3D Print</span><span class="tag">OLED</span></div>
-          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" class="project-link">View on LinkedIn →</a>
+          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" rel="noopener" class="project-link">View on LinkedIn →</a>
         </div>
       </div>
 
       <div class="project-card fade-in">
-        <div class="project-header"><div class="project-icon">🚁</div><span class="project-status status-active">Active</span></div>
+        <div class="project-header">
+          <div class="project-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="5" r="2.4"/><circle cx="19" cy="5" r="2.4"/><circle cx="5" cy="19" r="2.4"/><circle cx="19" cy="19" r="2.4"/><rect x="9.5" y="9.5" width="5" height="5" rx="1"/><path d="M7 7l2.5 2.5M17 7l-2.5 2.5M7 17l2.5-2.5M17 17l-2.5-2.5"/></svg>
+          </div>
+          <span class="project-status status-active">Active</span>
+        </div>
         <div class="project-body">
           <div class="project-date">NOV 2023 – PRESENT</div>
           <div class="project-title">AI-Powered RC Drone + Robotic Arm</div>
           <p class="project-desc">Designed and built an RC drone sponsored by Emax USA, with plans to integrate a robotic arm and AI-driven capabilities for life-saving and automated tasks. Prototype successfully completed maiden flight. Seeking additional sponsorship to scale development.</p>
           <div class="project-tags"><span class="tag">Drones</span><span class="tag green">Emax Sponsored</span><span class="tag">AI</span><span class="tag amber">Robotics</span></div>
-          <a href="https://www.youtube.com/@Phil_Gy" target="_blank" class="project-link">Watch on YouTube →</a>
+          <a href="https://www.youtube.com/@Phil_Gy" target="_blank" rel="noopener" class="project-link">Watch on YouTube →</a>
         </div>
       </div>
 
       <div class="project-card fade-in">
-        <div class="project-header"><div class="project-icon">🚗</div><span class="project-status status-complete">Complete</span></div>
+        <div class="project-header">
+          <div class="project-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <span class="project-status status-complete">Complete</span>
+        </div>
         <div class="project-body">
           <div class="project-date">JAN 2023 – MAY 2023</div>
           <div class="project-title">AI Car Anti-Crash Software</div>
           <p class="project-desc">Collaborated with high school team to develop an AI-powered anti-crash car system for Microsoft Imagine Cup Junior 2023. Contributed to software logic, AI integration, and system testing — earning recognition at a global competition.</p>
           <div class="project-tags"><span class="tag">AI / ML</span><span class="tag green">Microsoft</span><span class="tag">Safety Tech</span><span class="tag amber">Team Project</span></div>
-          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" class="project-link">View on LinkedIn →</a>
+          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" rel="noopener" class="project-link">View on LinkedIn →</a>
         </div>
       </div>
 
       <div class="project-card fade-in">
-        <div class="project-header"><div class="project-icon">🗑️</div><span class="project-status status-complete">Complete</span></div>
+        <div class="project-header">
+          <div class="project-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+          </div>
+          <span class="project-status status-complete">Complete</span>
+        </div>
         <div class="project-body">
           <div class="project-date">SEP 2022 – APR 2023</div>
           <div class="project-title">Smart IoT Dustbin</div>
           <p class="project-desc">Arduino-powered smart dustbin using ultrasonic sensors, LED indicators, and LCD screen. Reads trash levels in real-time, triggers alarm when full, and automatically opens lid via ultrasonic detection for hands-free operation. LCD Screen displays trash level and Alert Screen.</p>
           <div class="project-tags"><span class="tag">Arduino</span><span class="tag">IoT</span><span class="tag green">Ultrasonic</span><span class="tag amber">LCD</span></div>
-          <a href="https://www.youtube.com/@Phil_Gy" target="_blank" class="project-link">Watch on YouTube →</a>
+          <a href="https://www.youtube.com/@Phil_Gy" target="_blank" rel="noopener" class="project-link">Watch on YouTube →</a>
         </div>
       </div>
 
@@ -737,40 +810,48 @@
 <section id="certifications">
   <div class="container">
     <div class="section-label">03 / Certifications</div>
-    <h2 class="section-title">Credentials & Recognition</h2>
+    <h2 class="section-title">Credentials &amp; Recognition</h2>
     <div class="section-divider"></div>
     <div class="certs-grid">
       <div class="cert-card fade-in">
-        <div class="cert-icon">🏆</div>
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 010-5H6"/><path d="M18 9h1.5a2.5 2.5 0 000-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0012 0V2z"/></svg>
+        </div>
         <div class="cert-issuer">Microsoft</div>
         <div class="cert-name">Imagine Cup Junior — AI Challenge</div>
         <div class="cert-date">Issued May 2023</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6">AI, Microsoft Office, Machine Learning</div>
-        <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" class="cert-link">View on LinkedIn →</a>
+        <div class="cert-skills">AI, Microsoft Office, Machine Learning</div>
+        <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" rel="noopener" class="cert-link">View on LinkedIn →</a>
       </div>
       <div class="cert-card fade-in">
-        <div class="cert-icon">🐍</div>
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
         <div class="cert-issuer">Udemy</div>
-        <div class="cert-name">Python & JavaScript Development</div>
+        <div class="cert-name">Python &amp; JavaScript Development</div>
         <div class="cert-date">Issued Oct 2024</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6">Python, JavaScript, CSS, Web Development</div>
-        <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" class="cert-link">View on LinkedIn →</a>
+        <div class="cert-skills">Python, JavaScript, CSS, Web Development</div>
+        <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" rel="noopener" class="cert-link">View on LinkedIn →</a>
       </div>
       <div class="cert-card fade-in">
-        <div class="cert-icon">⚡</div>
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="1.5"/><path d="M9 3v4M15 3v4M9 17v4M15 17v4M3 9h4M3 15h4M17 9h4M17 15h4"/></svg>
+        </div>
         <div class="cert-issuer">Udemy</div>
-        <div class="cert-name">Arduino & Embedded Systems</div>
+        <div class="cert-name">Arduino &amp; Embedded Systems</div>
         <div class="cert-date">Issued Oct 2025</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6">Arduino, Embedded Systems, Hardware Programming</div>
-        <a href="https://www.udemy.com/certificate/UC-520c8b4b-7e0d-4c96-86c0-c2bc6867fcaa/" target="_blank" class="cert-link">View Certificate →</a>
+        <div class="cert-skills">Arduino, Embedded Systems, Hardware Programming</div>
+        <a href="https://www.udemy.com/certificate/UC-520c8b4b-7e0d-4c96-86c0-c2bc6867fcaa/" target="_blank" rel="noopener" class="cert-link">View Certificate →</a>
       </div>
       <div class="cert-card fade-in">
-        <div class="cert-icon">🔐</div>
+        <div class="cert-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+        </div>
         <div class="cert-issuer">Udemy (ZSecurity)</div>
         <div class="cert-name">Ethical Hacking Fundamentals</div>
         <div class="cert-date">Issued Oct 2024</div>
-        <div style="font-size:12px;color:var(--muted);line-height:1.6">Penetration Testing, Ethical Hacking, Cybersecurity</div>
-        <a href="https://www.udemy.com/certificate/UC-d7fec771-cdc8-4252-afda-64a88e4a2ab8/" target="_blank" class="cert-link">View Certificate →</a>
+        <div class="cert-skills">Penetration Testing, Ethical Hacking, Cybersecurity</div>
+        <a href="https://www.udemy.com/certificate/UC-d7fec771-cdc8-4252-afda-64a88e4a2ab8/" target="_blank" rel="noopener" class="cert-link">View Certificate →</a>
       </div>
     </div>
   </div>
@@ -784,40 +865,63 @@
     <div class="section-divider"></div>
     <div class="contact-grid">
       <div class="contact-info fade-in">
-        <h3>Open to Mentorship,<br>Collaboration & Opportunities</h3>
+        <h3>Open to Mentorship,<br>Collaboration &amp; Opportunities</h3>
         <p>I'm a high school student hungry to learn and grow. If you're a professional in robotics, mechatronics, or embedded systems — I'd love to connect. Whether it's mentorship, collaboration on a project, or just sharing knowledge, reach out!</p>
         <div class="contact-items">
           <a href="mailto:philimonafriyie86@gmail.com" class="contact-item">
-            <div class="contact-item-icon"><svg width="16" height="16" fill="none" stroke="var(--cyan)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
+            <div class="contact-item-icon"><svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></div>
             <div class="contact-item-text"><div class="contact-item-label">Email</div><div class="contact-item-value">philimonafriyie86@gmail.com</div></div>
           </a>
-          <a href="https://wa.me/233554197193" target="_blank" class="contact-item">
-            <div class="contact-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="var(--cyan)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.091.534 4.06 1.47 5.78L.019 24l6.394-1.438A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.641-.491-5.168-1.35l-.37-.22-3.829.861.874-3.745-.241-.383A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></div>
+          <a href="https://wa.me/233554197193" target="_blank" rel="noopener" class="contact-item">
+            <div class="contact-item-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.091.534 4.06 1.47 5.78L.019 24l6.394-1.438A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.641-.491-5.168-1.35l-.37-.22-3.829.861.874-3.745-.241-.383A10 10 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg></div>
             <div class="contact-item-text"><div class="contact-item-label">WhatsApp</div><div class="contact-item-value">+233 554 197 193</div></div>
           </a>
-          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" class="contact-item">
-            <div class="contact-item-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="var(--cyan)"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
+          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" rel="noopener" class="contact-item">
+            <div class="contact-item-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
             <div class="contact-item-text"><div class="contact-item-label">LinkedIn</div><div class="contact-item-value">Gyamerah Afriyie Philimon Jr</div></div>
           </a>
         </div>
       </div>
       <div class="fade-in">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--cyan);margin-bottom:20px;text-transform:uppercase;">Find Me Online</div>
+        <div class="socials-head">Find Me Online</div>
         <div class="socials-grid">
-          <a href="https://www.youtube.com/@Phil_Gy" target="_blank" class="social-card"><div class="social-card-icon">📺</div><div class="social-card-name">YouTube</div><div class="social-card-handle">@Phil_Gy</div></a>
-          <a href="https://www.instagram.com/_phil.jr" target="_blank" class="social-card"><div class="social-card-icon">📸</div><div class="social-card-name">Instagram</div><div class="social-card-handle">@_phil.jr</div></a>
-          <a href="https://www.tiktok.com/@_phil.jr" target="_blank" class="social-card"><div class="social-card-icon">🎵</div><div class="social-card-name">TikTok</div><div class="social-card-handle">@_phil.jr</div></a>
-          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" class="social-card"><div class="social-card-icon">💼</div><div class="social-card-name">LinkedIn</div><div class="social-card-handle">Gyamerah Afriyie Philimon Jr</div></a>
+          <a href="https://www.youtube.com/@Phil_Gy" target="_blank" rel="noopener" class="social-card">
+            <div class="social-card-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.95A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg></div>
+            <div class="social-card-name">YouTube</div><div class="social-card-handle">@Phil_Gy</div>
+          </a>
+          <a href="https://www.instagram.com/_phil.jr" target="_blank" rel="noopener" class="social-card">
+            <div class="social-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>
+            <div class="social-card-name">Instagram</div><div class="social-card-handle">@_phil.jr</div>
+          </a>
+          <a href="https://www.tiktok.com/@_phil.jr" target="_blank" rel="noopener" class="social-card">
+            <div class="social-card-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1.04-.1z"/></svg></div>
+            <div class="social-card-name">TikTok</div><div class="social-card-handle">@_phil.jr</div>
+          </a>
+          <a href="https://www.linkedin.com/in/gyamerah-afriyie-philimon-32a11525b" target="_blank" rel="noopener" class="social-card">
+            <div class="social-card-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></div>
+            <div class="social-card-name">LinkedIn</div><div class="social-card-handle">Gyamerah Afriyie Philimon Jr</div>
+          </a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">PHIL<span>.JR</span> — GYAMERAH AFRIYIE PHILIMON</div>
-  <div class="footer-copy">© 2026 · ROBOTICS & EMBEDDED SYSTEMS · 🇬🇭 GHANA</div>
+  <div class="footer-copy">
+    © 2026 · ROBOTICS &amp; EMBEDDED SYSTEMS ·
+    <svg class="flag-gh" viewBox="0 0 24 16" aria-label="Ghana">
+      <rect width="24" height="16" fill="#006B3F"/>
+      <rect width="24" height="10.67" fill="#FCD116"/>
+      <rect width="24" height="5.33" fill="#CE1126"/>
+      <path d="M12 5.5l.9 2.77h2.92l-2.36 1.72.9 2.77L12 11.05l-2.36 1.71.9-2.77-2.36-1.72h2.92z" fill="#000"/>
+    </svg>
+    GHANA
+  </div>
 </footer>
 
 <script>
@@ -825,7 +929,6 @@
   const html = document.documentElement;
   const themeToggle = document.getElementById('themeToggle');
 
-  // Restore saved preference (default: dark)
   const saved = localStorage.getItem('phil-theme') || 'dark';
   html.setAttribute('data-theme', saved);
 
@@ -833,29 +936,6 @@
     const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     html.setAttribute('data-theme', next);
     localStorage.setItem('phil-theme', next);
-  });
-
-  /* ── CURSOR ── */
-  const cursor = document.getElementById('cursor');
-  const cursorRing = document.getElementById('cursorRing');
-  let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX; mouseY = e.clientY;
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top  = mouseY + 'px';
-  });
-  (function animRing() {
-    ringX += (mouseX - ringX) * 0.15;
-    ringY += (mouseY - ringY) * 0.15;
-    cursorRing.style.left = ringX + 'px';
-    cursorRing.style.top  = ringY + 'px';
-    requestAnimationFrame(animRing);
-  })();
-
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; cursorRing.style.width = '50px'; cursorRing.style.height = '50px'; });
-    el.addEventListener('mouseleave', () => { cursor.style.width = '10px'; cursor.style.height = '10px'; cursorRing.style.width = '36px'; cursorRing.style.height = '36px'; });
   });
 
   /* ── HAMBURGER ── */
@@ -874,7 +954,7 @@
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry, i) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        setTimeout(() => entry.target.classList.add('visible'), i * 90);
         observer.unobserve(entry.target);
       }
     });
